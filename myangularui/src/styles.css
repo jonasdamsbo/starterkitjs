@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+body
+{
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+content
+{
+    display: block;
+    padding: 10px;
+    /* margin: 0 10px; */
+}
+content > a {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    transition: all ease .3s;
+    text-decoration: none;
+    padding: 10px 10px;
+    border-radius: .25rem;
+}
+
+td {
+    padding: 10px;
+}
+td a {
+    padding: 5px;
+}
+td a:first-child {
+    margin-right: 5px;
+}
+
+th {
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+tr {
+    border-bottom: black 1px solid;
+    height: 55px;
+}

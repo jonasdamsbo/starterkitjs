@@ -1,0 +1,139 @@
+name: Build angular express devops
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  
+  build-backend:
+
+    needs: [build-devops]
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ['20.15.1']
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Replace databaseurl
+      run: ((Get-Content -path .env -Raw) -replace 'sqlserver://localhost:12345;database=mydb;integratedSecurity=false;username=sa;password=P@ssw0rd;trustServerCertificate=true;', '${{ vars.DATABASE_URL }}' ) | Set-Content -Path .env
+      shell: pwsh
+      working-directory: ./myexpressapi
+
+    - name: Replace cors weburl
+      run: ((Get-Content -path app.ts -Raw) -replace 'http://localhost:4200', '${{ vars.WEBURL }}' ) | Set-Content -Path app.ts
+      shell: pwsh
+      working-directory: ./myexpressapi/src
+
+    - name: Copy backend dependencies
+      run: | 
+        Copy-Item "./myexpressapi/package-lock.json" -Destination "./package-lock.json"
+        Copy-Item "./myexpressapi/package.json" -Destination "./package.json"
+      shell: pwsh
+
+    - name: Set Up Node.js angular
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.15.1'
+        cache: npm
+
+    - name: Install Dependencies api
+      run: npm ci
+      working-directory: ./myexpressapi
+    
+    - name: Build Express Project
+      run: npm run build
+      working-directory: ./myexpressapi
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4.5.0
+      with:
+        name: expressartifact
+        path: ./myexpressapi
+        retention-days: 2
+
+
+  build-frontend:
+
+    needs: [build-backend]
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ['20.15.1']
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Copy frontend dependencies
+      run: | 
+        Copy-Item "./myangularui/package-lock.json" -Destination "./package-lock.json"
+        Copy-Item "./myangularui/package.json" -Destination "./package.json"
+      shell: pwsh
+
+    - name: Set Up Node.js angular
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.15.1'
+        cache: npm
+
+    - name: Install Dependencies
+      run: npm ci
+      working-directory:
+
+    - name: Install Dependencies web
+      run: npm ci
+      working-directory: ./myangularui
+
+    - name: Replace apiurl
+      run: ((Get-Content -path example.service.ts -Raw) -replace 'http://localhost:8080/', '${{ vars.APIURL }}' ) | Set-Content -Path example.service.ts
+      shell: pwsh
+      working-directory: ./myangularui/src/app/example/services
+
+    - name: Print apiurl
+      run: write-host (Get-Content -path example.service.ts -Raw)
+      shell: pwsh
+      working-directory: ./myangularui/src/app/example/services
+
+    - name: Build Angular Project
+      run: npm run build
+      working-directory: ./myangularui
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4.5.0
+      with:
+        name: angularartifact
+        path: ./myangularui/dist/myangularui
+        retention-days: 2
+
+  build-devops:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Upload Scripts Artifact
+      uses: actions/upload-artifact@v4.5.0
+      with:
+        name: scriptsartifact
+        path: ./scripts
+        retention-days: 2
+        
+    - name: Upload Terraform Artifact
+      uses: actions/upload-artifact@v4.5.0
+      with:
+        name: terraformartifact
+        path: ./terraform
+        retention-days: 2

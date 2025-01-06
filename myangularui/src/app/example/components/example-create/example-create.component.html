@@ -1,0 +1,10 @@
+<content>
+  <h2 style="margin: 0; font-weight: 500;">Create Example</h2><br>
+    <form (ngSubmit)="saveExample()">
+      <label for="title">Title:</label><br>
+      <input id="title" [(ngModel)]="example.title" name="title" required /><br><br>
+      <label for="description">Description:</label><br>
+      <input id="description" [(ngModel)]="example.description" name="description" required /><br><br>
+      <button type="submit">Save</button>
+    </form>
+</content>

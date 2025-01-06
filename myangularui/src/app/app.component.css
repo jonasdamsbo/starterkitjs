@@ -1,0 +1,28 @@
+nav
+{
+  position: sticky;
+  display: flex;
+  justify-content: baseline;
+  gap: 50px;
+  background-color: rgba(20,20,20,.8);
+  margin: 0;
+  padding: 20px;
+  height: 25px;
+  background-image: linear-gradient(90deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+nav a
+{
+  transition: transform ease .3s, color ease .3s;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+}
+nav a:hover
+{
+  transform:scale(1.2);
+  color: orange;
+}
+
+/* nav a:active {
+  background-color: rgba(255, 255, 255, 0.37);
+} */

@@ -1,0 +1,11 @@
+<content>
+  <h2 style="margin: 0;">Delete Example</h2>
+  <p>Are you sure you want to delete this example?</p>
+  <p *ngIf="example">
+    <strong>{{ example.id }}</strong>
+    <strong>{{ example.title }}</strong>
+    <strong>{{ example.description }}</strong>
+  </p>
+  <button (click)="deleteExample()">Yes, Delete</button>
+  <button (click)="cancel()">Cancel</button>
+</content>

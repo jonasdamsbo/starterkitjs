@@ -1,0 +1,25 @@
+<content>
+  <h3 style="margin: 0; font-weight: 500; font-size: 1.75rem;">Example List</h3>
+  
+  <br>
+  <a routerLink="/create">Create New Product</a>
+
+  <br>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let example of examples">
+      <td>{{ example.id }}</td>
+      <td>{{ example.title }}</td>
+      <td>{{ example.description }}</td>
+      <td class="actions">
+        <a [routerLink]="['/update', example.id]">Update</a>
+        <a [routerLink]="['/delete', example.id]">Delete</a>
+      </td>
+    </tr>
+  </table>
+</content>

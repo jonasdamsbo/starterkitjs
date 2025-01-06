@@ -1,0 +1,18 @@
+.actions a {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    transition: all ease .3s;
+    text-decoration: none;
+    padding: 10px 10px;
+    border-radius: .25rem;
+}
+.actions a:hover {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+.actions {
+    display: flex;
+    justify-content: space-evenly;
+}
