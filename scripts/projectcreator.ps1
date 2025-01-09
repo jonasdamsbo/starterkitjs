@@ -273,9 +273,12 @@
         ((Get-Content -path README.md -Raw) -replace 'tempsubscriptionname',$subscriptionName) | Set-Content -Path README.md
         ((Get-Content -path README.md -Raw) -replace 'tempresourcegroupname',$resourcegroupName) | Set-Content -Path README.md
         ((Get-Content -path README.md -Raw) -replace 'temprepositoryname',$repositoryName) | Set-Content -Path README.md
+        ((Get-Content -path README.md -Raw) -replace 'tempstorageaccountname',$storageaccountName) | Set-Content -Path README.md
+        ((Get-Content -path README.md -Raw) -replace 'tempterraformcontainer',$terraformcontainerName) | Set-Content -Path README.md
+        ((Get-Content -path README.md -Raw) -replace 'tempbackupcontainer',$dbbackupcontainerName) | Set-Content -Path README.md
         ((Get-Content -path README.md -Raw) -replace 'tempapplicationname',$applicationName) | Set-Content -Path README.md
-        ((Get-Content -path README.md -Raw) -replace 'tempwebappurl',$weburl) | Set-Content -Path README.md
-        ((Get-Content -path README.md -Raw) -replace 'tempapiurl',$apiurl) | Set-Content -Path README.md
+        #((Get-Content -path README.md -Raw) -replace 'tempwebappurl',$weburl) | Set-Content -Path README.md
+        #((Get-Content -path README.md -Raw) -replace 'tempapiurl',$apiurl) | Set-Content -Path README.md
 
         read-host "Done replacing vars in readme.txt, press enter to proceed..."
 
@@ -367,7 +370,10 @@
             @{ name = "TENANTID"; value = "$tenantid" },
             @{ name = "TERRAFORMCONTAINER"; value = "$terraformcontainerName" },
             @{ name = "WEBURL"; value = "$weburl" },
-            @{ name = "BACKUPCONTAINER"; value = "$dbbackupcontainerName" }
+            @{ name = "BACKUPCONTAINER"; value = "$dbbackupcontainerName" },
+            @{ name = "ORGANIZATIONNAME"; value = "$organizationName" },
+            @{ name = "SUBSCRIPTIONNAME"; value = "$subscriptionName" }
+            #,@{ name = "STORAGECONNECTIONSTRING"; value = "$storageconnectionstring" }
         )
 
     # Loop through and create each variable
