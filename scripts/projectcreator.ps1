@@ -165,15 +165,17 @@
         
 
         # prep cloud vars
-            $apiurl = "https://"+$resourcename+"apiapp.azurewebsites.net/"
+            $apiurl = "https://"+$resourceName+"apiapp.azurewebsites.net/"
             $weburl = "https://"+$resourceName+"webapp.azurewebsites.net/"
 
-            # $sqlpassword = -join (((48..57) | Get-Random | % {[char]$_})+((65..90) | Get-Random | % {[char]$_})+((97..122) | Get-Random | % {[char]$_})+(-join ((48..57) + (65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_})))
-            $sqlpassword = "P@ssw0rd"
+            $sqlpassword = -join (((48..57) | Get-Random | % {[char]$_})+((65..90) | Get-Random | % {[char]$_})+((97..122) | Get-Random | % {[char]$_})+(-join ((48..57) + (65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_})))
+            #$sqlpassword = "P@ssw0rd"
 
-            Write-Host "If you have a cloud sql database and want to use it, please enter your databaseurl(will be stored i github secrets)"
-            Write-Host "Syntax: sqlserver://localhost:12345;database=mydb;integratedSecurity=false;username=sa;password=P@ssw0rd;trustServerCertificate=true;"
-            $database_url = read-host
+            $database_url = "sqlserver://"+$resourceName+"mssqlserver.database.windows.net:1433;database=mssqldatabase;integratedSecurity=false;username="+$resourceName+";password="+$sqlpassword+";trustServerCertificate=true;"
+
+            # Write-Host "If you have a cloud sql database and want to use it, please enter your databaseurl(will be stored i github secrets)"
+            # Write-Host "Syntax: sqlserver://localhost:12345;database=mydb;integratedSecurity=false;username=sa;password=P@ssw0rd;trustServerCertificate=true;"
+            # $database_url = read-host
 
 # Create prerequisites (app registration, federated identity, github, repository, resourcegroup, storageaccount, containers(terraform+dbbackup))
 
