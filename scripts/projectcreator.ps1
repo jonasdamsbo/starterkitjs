@@ -414,3 +414,29 @@
         } | ConvertTo-Json -Depth 10)
 
         Write-Host "No-push policy applied to main branch"
+
+
+################################################## tools-installer ##################################################
+
+        write-host "Your project is set up!"
+
+        # run install tools script
+        while($installTools -ne "yes" -and $installTools -ne "no")
+        {
+            $userAnswer = read-host "Install developer tools? (yes/no)"
+            if($userAnswer -eq "yes")
+            {
+                $installTools = "yes"
+                $scriptpath = $PWD.Path + '\scripts\tools-installer.ps1'
+                write-host $scriptpath
+                write-host 
+                & $scriptpath run
+            }
+            else
+            {
+                $installTools = "no"
+            }
+        }
+        #read-host "Enter to proceed..."
+
+read-host "Script is done, enter to exit..."
