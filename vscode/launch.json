@@ -1,0 +1,99 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // {
+        //     "name": "PowerShell: Launch Current File",
+        //     "type": "PowerShell",
+        //     "request": "launch",
+        //     "script": "${file}",
+        //     "args": []
+        // },
+        {
+            "name": "Launch Angular",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/myangularui/node_modules/@angular/cli/bin/ng",
+            "args": ["serve"],
+            "cwd": "${workspaceFolder}/myangularui",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Launch Angular in browser",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/myangularui/node_modules/@angular/cli/bin/ng",
+            "args": ["serve"],
+            "cwd": "${workspaceFolder}/myangularui",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "preLaunchTask": "Open Angular in Browser"
+        },
+        {
+            "name": "Launch Angular + vscbrowser",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/myangularui/node_modules/@angular/cli/bin/ng",
+            "args": ["serve"],
+            "cwd": "${workspaceFolder}/myangularui",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "preLaunchTask": "Open Simple Browser"
+        },
+        {
+            "name": "Launch Express",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/myexpressapi/src/app.ts",
+            "cwd": "${workspaceFolder}/myexpressapi",
+            "runtimeArgs": ["-r", "ts-node/register"],
+            "env": {
+                "TS_NODE_PROJECT": "${workspaceFolder}/myexpressapi/tsconfig.json"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "Launch Express in browser",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/myexpressapi/src/app.ts",
+            "cwd": "${workspaceFolder}/myexpressapi",
+            "runtimeArgs": ["-r", "ts-node/register"],
+            "env": {
+                "TS_NODE_PROJECT": "${workspaceFolder}/myexpressapi/tsconfig.json"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "preLaunchTask": "Open Express in Browser"
+        },
+        {
+            "name": "Launch Express + vscbrowser",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/myexpressapi/src/app.ts",
+            "cwd": "${workspaceFolder}/myexpressapi",
+            "runtimeArgs": ["-r", "ts-node/register"],
+            "env": {
+                "TS_NODE_PROJECT": "${workspaceFolder}/myexpressapi/tsconfig.json"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "preLaunchTask": "Open Simple Browser"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch both",
+            "configurations": ["Launch Angular", "Launch Express"]
+        },
+        {
+            "name": "Launch both in browser",
+            "configurations": ["Launch Angular in browser", "Launch Express in browser"]
+        },
+        {
+            "name": "Launch both + vscbrowser",
+            "configurations": ["Launch Angular + vscbrowser", "Launch Express + vscbrowser"]
+        }
+    ]
+}
