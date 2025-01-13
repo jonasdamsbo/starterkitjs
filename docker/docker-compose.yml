@@ -1,0 +1,20 @@
+services:
+  sql:
+    container_name: mssql-server
+    image: 'mcr.microsoft.com/mssql/server:latest'
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2048M
+    user: root
+    ports:
+      - "12345:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "P@ssw0rd"
+    volumes:
+     - mssqldata:/var/opt/mssql/data
+
+volumes:
+  mssqldata:
