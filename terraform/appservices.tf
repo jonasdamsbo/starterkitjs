@@ -26,7 +26,7 @@ resource "azurerm_linux_web_app" "exampleWebapp" {
     }
   }
 
-logs{
+  logs{
     application_logs {
       file_system_level = "Verbose"
     }
@@ -50,6 +50,12 @@ resource "azurerm_linux_web_app" "exampleApiapp" {
 
     application_stack {
       node_version = "20-lts"
+    }
+  }
+
+  logs{
+    application_logs {
+      file_system_level = "Verbose"
     }
   }
 
