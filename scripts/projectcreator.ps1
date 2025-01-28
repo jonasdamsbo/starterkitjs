@@ -206,7 +206,7 @@
         # federated identity
 
             write-host "Creating federated identity..."
-            
+
             # Set the federated identity variables
             $resource = "repo:"+"$organizationName"+"/"+"$repositoryName"+":ref:refs/heads/master"
             $federatedCredentialName = "GitHubFederatedIdentity"
@@ -220,7 +220,7 @@
             } 
 
             # Convert hashtable to JSON
-            $federatedCredentialJson = $federatedCredentialBody | ConvertTo-Json -Depth 2 -Compress
+            $federatedCredentialJson = $federatedCredentialBody | ConvertTo-Json -Depth 10 -Compress | Out-String
 
             # Use Azure CLI to add the federated identity
             az rest --method POST `
