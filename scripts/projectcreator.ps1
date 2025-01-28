@@ -204,6 +204,9 @@
         read-host "Done getting and replacing tenantid, clientid, clientsecret... press enter to continue"
         
         # federated identity
+
+            write-host "Creating federated identity..."
+            
             # Set the federated identity variables
             $resource = "repo:"+"$organizationName"+"/"+"$repositoryName"+":ref:refs/heads/master"
             $federatedCredentialName = "GitHubFederatedIdentity"
@@ -225,7 +228,7 @@
                     --headers "Content-Type=application/json" `
                     --body $federatedCredentialJson
 
-            Write-Host "Federated identity '$federatedCredentialName' created for GitHub Actions."
+            read-host "Federated identity '$federatedCredentialName' created for GitHub Actions... press enter to continue"
 
 
     # create preliminary resources
@@ -238,11 +241,13 @@
             $resourcegroupId = az group create -l "northeurope" -n $resourcegroupName --managed-by $fullSubId --output json --query "[id]"
             write-host $resourcegroupId
             write-host "Done creating resourcegroup..."
+            read-host "Press enter to proceed..."
 
         # create storageaccount
             write-host "Started creating storageaccount..."
             $storageaccountId = az storage account create -l "northeurope" -n $storageaccountName -g $resourcegroupName --sku Standard_LRS --output json --query "[id]"
             write-host "Done creating storageaccount..."
+            read-host "Press enter to proceed..."
 
         # create terraform container
             write-host "Started creating storageaccount terraform container..."
@@ -250,6 +255,7 @@
             az storage container create --name $terraformcontainerName --account-name $storageaccountName
             write-host $storageaccountId
             write-host "Done creating storageaccount terraform container..."
+            read-host "Press enter to proceed..."
 
         # create dbbackup container
             write-host "Started creating storageaccount dbbackup container..."
@@ -257,12 +263,14 @@
             az storage container create --name $dbbackupcontainerName --account-name $storageaccountName
             write-host $storageaccountId
             write-host "Done creating storageaccount dbbackup container..."
+            read-host "Press enter to proceed..."
 
         # get storageaccountkey
             write-host "Started getting storage key..."
             $storagekey = az storage account keys list -g $resourcegroupName -n $storageaccountName --query "[0].value"
             #$storageconnectionstring = az storage account show-connection-string --resource-group $resourcegroupName --name $storageaccountName --output tsv
             write-host "Done creating pipeline variable from storage key..."
+            read-host "Press enter to proceed..."
 
 
 # Replace temp vars with resourcename etc
@@ -339,6 +347,7 @@
 # Create github repository
 
     # Initialize Git repository
+    Write-Host "init git repo..."
 
         $remoteName = "https://github.com/$organizationName/$repositoryName.git"
         Write-Host "Remote name: $remoteName"
@@ -349,9 +358,25 @@
         git remote add origin $remoteName
         Write-Host "Remote added"
 
+    read-host "Press enter to proceed..."
+
+
+# Push to github repository
+
+    Write-Host "Push to git repo..."
+    # Push to GitHub repository
+    
+    git add .
+    git commit -m "Initial commit"
+    git branch -M master
+    git push --set-upstream origin master
+    Write-Host "Code pushed to GitHub repository"
+    read-host "Press enter to proceed..."
+
 
 # Create github variables
 
+    write-host "Creating github variables..."
     # Define variables
 
         $repoApiUrl = "https://api.github.com/repos/$organizationName/$repositoryName/actions/variables"
@@ -390,20 +415,13 @@
 
             Write-Host "Created variable: $($variable.name)"
         }
-
-
-# Push to github repository
-
-    # Push to GitHub repository
-    
-        git add .
-        git commit -m "Initial commit"
-        git branch -M master
-        git push --set-upstream origin master
-        Write-Host "Code pushed to GitHub repository"
+    Write-Host "created github variables..."
+    read-host "Press enter to proceed..."
 
 
 # Create no push policy
+
+    write-host "Creating no-push policy..."
 
     # Set no-push-to-master policy
 
@@ -414,6 +432,8 @@
         } | ConvertTo-Json -Depth 10)
 
         Write-Host "No-push policy applied to main branch"
+
+    read-host "Press enter to proceed..."
 
 
 ################################################## tools-installer ##################################################
