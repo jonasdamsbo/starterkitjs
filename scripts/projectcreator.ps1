@@ -252,7 +252,7 @@
             az rest --method POST `
                     --url "$fedUrl" `
                     --headers "Content-Type=application/json" `
-                    --body $federatedCredentialJson
+                    --body "$federatedCredentialJson"
 
             read-host "Federated identity '$federatedCredentialName' created for GitHub Actions... press enter to continue"
 
