@@ -248,8 +248,9 @@
             Write-Host "Federated Credential JSON: $federatedCredentialJson"
 
             # Use Azure CLI to add the federated identity
+            $fedUrl = "https://graph.microsoft.com/v1.0/applications/"+"$clientid"+"/federatedIdentityCredentials"
             az rest --method POST `
-                    --url "https://graph.microsoft.com/v1.0/applications/$clientid/federatedIdentityCredentials" `
+                    --url "$fedUrl" `
                     --headers "Content-Type=application/json" `
                     --body $federatedCredentialJson
 
