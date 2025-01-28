@@ -203,6 +203,28 @@
 
         read-host "Done getting and replacing tenantid, clientid, clientsecret... press enter to continue"
         
+
+        # add needed permission for federated identity
+        
+            $AppId = $clientid # Replace with your app's client ID
+            $GraphApiId = "00000003-0000-0000-c000-000000000000" # Microsoft Graph API ID
+            $PermissionId = "19dbc75e-c2e2-444c-a770-ec69d8559fc7" # Permission ID for Application.ReadWrite.All
+
+            az ad app permission add `
+                --id $AppId `
+                --api $GraphApiId `
+                --api-permissions "$PermissionId=Role"
+
+            # Grant admin consent for the permission
+            az ad app permission admin-consent --id $AppId
+
+            # Verify permissions
+            az ad app permission list `
+                --id $AppId `
+                --query "[].{Permission:resourceAccess, API:resourceAppId}" `
+                --output table
+
+
         # federated identity
 
             write-host "Creating federated identity..."
