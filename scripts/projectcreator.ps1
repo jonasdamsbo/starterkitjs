@@ -205,7 +205,7 @@
         
 
         # add needed permission for federated identity
-        
+
             $AppId = $clientid # Replace with your app's client ID
             $GraphApiId = "00000003-0000-0000-c000-000000000000" # Microsoft Graph API ID
             $PermissionId = "19dbc75e-c2e2-444c-a770-ec69d8559fc7" # Permission ID for Application.ReadWrite.All
@@ -241,12 +241,15 @@
                 audiences = @("api://AzureADTokenExchange")
             } 
 
-            # Convert hashtable to JSON
-            $federatedCredentialJson = $federatedCredentialBody | ConvertTo-Json -Depth 10 -Compress | Out-String
+            # Convert the body to JSON
+            $federatedCredentialJson = $federatedCredentialBody | ConvertTo-Json -Depth 10 -Compress
+
+            # Debug (Optional): Display the JSON payload
+            Write-Host "Federated Credential JSON: $federatedCredentialJson"
 
             # Use Azure CLI to add the federated identity
             az rest --method POST `
-                    --url "https://graph.microsoft.com/v1.0/applications/$clientid/federatedIdentityCredentials" `
+                    --url "https://graph.microsoft.com/v1.0/applications/"+"$clientid"+"/federatedIdentityCredentials" `
                     --headers "Content-Type=application/json" `
                     --body $federatedCredentialJson
 
